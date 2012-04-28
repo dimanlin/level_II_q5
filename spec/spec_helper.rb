@@ -1,10 +1,21 @@
-module Common do
-  def self.clear(dir)
-    Dir.foreach(dir) do |f|
-      if f == file_name or f == '.' or f == '..' then next
-      elsif File.directory?(f) then FileUtils.rm_rf(f)
-      else FileUtils.rm( f )
-      end
+module Common
+
+  def self.root_dir
+    File.expand_path("./")
+  end
+
+  def self.clear_image_dir
+    lib_dir = File.join(self.root_dir, "spec", "tmp")
+    Dir.foreach(lib_dir) do |f|
+      next if f == '.' or f == '..'
+      File.delete(File.join(lib_dir, f))
     end
   end
+
+  def self.check_file(file)
+    path_file = File.join(self.root_dir, "spec", "tmp", file)  
+    File.exist?(path_file)
+  end
+
 end
+
